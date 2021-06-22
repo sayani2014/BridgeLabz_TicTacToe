@@ -1,7 +1,7 @@
 /**
- * Ability for user to make a move to a desired location in the board
- * Select the index from 1 to 9 to make the move.
- * Ensure the index is free
+ * Ability to check for the free space before making the desired move
+ * Extend UC4 to check if the free space is available for the move
+ * In case available make the move
  *
  * @author : SAYANI KOLEY
  * @since : 22.06.2021
