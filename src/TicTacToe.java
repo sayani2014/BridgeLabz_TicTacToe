@@ -1,7 +1,6 @@
 /**
- * Ability to check for the free space before making the desired move
- * Extend UC4 to check if the free space is available for the move
- * In case available make the move
+ * Toss to check who plays first.
+ * Use Random to determine who starts first, the computer or the user
  *
  * @author : SAYANI KOLEY
  * @since : 22.06.2021
@@ -11,6 +10,7 @@ import java.util.Scanner;
 
 public class TicTacToe {
     static Scanner input = new Scanner(System.in);
+
     public static void main(String[] args) {
         char[] board = new char[10];
 
@@ -21,6 +21,8 @@ public class TicTacToe {
             board[i] = '-';
         }
         showboard(board);
+
+        whoPlaysFirst();
 
         char inputChoice = chooseLetter();
         System.out.println("Player has chosen " +inputChoice);
@@ -58,5 +60,20 @@ public class TicTacToe {
             System.out.println("Someone has already made a move at this position! Try again!" + "\n");
         else
             board[position] = inputCharUser;
+    }
+
+    //Toss to check who plays first
+    public static String whoPlaysFirst() {
+        int randomNumber = (int) Math.floor(Math.random() * 10) % 2;
+        String player = "";
+
+        if(randomNumber == 1)
+            player = "User";
+        else
+            player = "Computer";
+
+        System.out.println("\n" + player + " starts first.");
+
+        return player;
     }
 }
