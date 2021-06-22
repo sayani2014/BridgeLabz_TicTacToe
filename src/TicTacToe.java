@@ -1,6 +1,11 @@
 /**
- * Toss to check who plays first.
- * Use Random to determine who starts first, the computer or the user
+ * Determine after every move the winner or the tie or change the turn
+ * On Computer getting its turn would like the computer to play like me
+ * Next thing I do is check if my Opponent can win then play to block it
+ * If neither of us are winning then My first choice would be to take one of the available corners
+ * If the corners are not available then take the Centre
+ * Lastly any of the available sides
+ * Play till the game is full or th player wins
  *
  * @author : SAYANI KOLEY
  * @since : 22.06.2021
@@ -20,14 +25,45 @@ public class TicTacToe {
         for(int i = 0; i < board.length; i++) {
             board[i] = '-';
         }
-        showboard(board);
 
-        whoPlaysFirst();
+        String player = whoPlaysFirst();
 
-        char inputChoice = chooseLetter();
-        System.out.println("Player has chosen " +inputChoice);
+        //Create a player1 boolean that is true if it is player 1's turn and false if it is player 2's turn
+        boolean player1 = true;
 
-        playerPosition(inputChoice, board);
+        //Create a gameEnded boolean and use it as the condition in the while loop
+        boolean gameEnded = false;
+        while(!gameEnded) {
+            //Draw the board
+            showboard(board);
+
+            char inputChoice = chooseLetter();
+            System.out.println("\n" + player + " has chosen " +inputChoice);
+
+            playerPosition(inputChoice, board);
+
+            //Check to see if either player has won
+            if(playerHasWon(board) == 'X') {
+                System.out.println(player + " wins!");
+                gameEnded = true;
+            }
+            else if(playerHasWon(board) == 'O') {
+                System.out.println(player + " wins!");
+                gameEnded = true;
+            }
+            else {
+                //If neither player has won, check to see if there has been a tie (if the board is full)
+                if (boardIsFull(board)) {
+                    System.out.println("It's a tie!");
+                    gameEnded = true;
+                } else {
+                    //If player1 is true, make it false, and vice versa; this way, the players alternate each turn
+                    player1 = !player1;
+                }
+            }
+        }
+
+        //Final game board
         showboard(board);
     }
 
@@ -75,5 +111,45 @@ public class TicTacToe {
         System.out.println("\n" + player + " starts first.");
 
         return player;
+    }
+
+    public static char playerHasWon(char[] board) {
+        StringBuilder s = new StringBuilder();
+        String line = " ";
+        for (int i = 0; i < 8; i++) {
+
+            //Check for rows
+            if(board[0] == board[1] && board[1] == board[2] && board[0] != '-' && board[1] != '-' && board[2] != '-')
+                return board[i];
+            if(board[3] == board[4] && board[4] == board[5] && board[3] != '-' && board[4] != '-' && board[5] != '-')
+                return board[i];
+            if(board[6] == board[7] && board[7] == board[8] && board[6] != '-' && board[7] != '-' && board[8] != '-')
+                return board[i];
+
+            //Check for columns
+            if(board[0] == board[3] && board[3] == board[6] && board[0] != '-' && board[3] != '-' && board[6] != '-')
+                return board[i];
+            if(board[1] == board[4] && board[4] == board[7] && board[1] != '-' && board[4] != '-' && board[7] != '-')
+                return board[i];
+            if(board[2] == board[5] && board[5] == board[8] && board[2] != '-' && board[5] != '-' && board[8] != '-')
+                return board[i];
+
+            //Check for diagonals
+            if(board[0] == board[4] && board[4] == board[8] && board[0] != '-' && board[4] != '-' && board[8] != '-')
+                return board[i];
+            if(board[2] == board[4] && board[4] == board[6] && board[2] != '-' && board[4] != '-' && board[6] != '-')
+                return board[i];
+        }
+        return '-';
+    }
+
+    //Check if all of the positions on the board have been filled
+    public static boolean boardIsFull(char[] board) {
+        for(int i = 0; i < board.length; i++) {
+                if(board[i] == '-') {
+                    return false;
+                }
+            }
+        return true;
     }
 }
