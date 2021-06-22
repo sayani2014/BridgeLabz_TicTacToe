@@ -1,11 +1,5 @@
 /**
- * Determine after every move the winner or the tie or change the turn
- * On Computer getting its turn would like the computer to play like me
- * Next thing I do is check if my Opponent can win then play to block it
- * If neither of us are winning then My first choice would be to take one of the available corners
- * If the corners are not available then take the Centre
- * Lastly any of the available sides
- * Play till the game is full or th player wins
+ * Ask for another game once the game completes
  *
  * @author : SAYANI KOLEY
  * @since : 22.06.2021
@@ -38,7 +32,7 @@ public class TicTacToe {
             showboard(board);
 
             char inputChoice = chooseLetter();
-            System.out.println("\n" + player + " has chosen " +inputChoice);
+            System.out.println("\n" + "Player has chosen " +inputChoice);
 
             playerPosition(inputChoice, board);
 
@@ -60,6 +54,20 @@ public class TicTacToe {
                     //If player1 is true, make it false, and vice versa; this way, the players alternate each turn
                     player1 = !player1;
                 }
+            }
+            while(gameEnded == true) {
+                System.out.println("Play another game? Y | N");
+                char option = input.next().charAt(0);
+
+                if(option == 'Y') {
+                    //Initilise the board with '-' to again start playing
+                    gameEnded = false;
+                    for (int i = 0; i < board.length; i++) {
+                            board[i] = '-';
+                        }
+                }
+                else
+                    break;
             }
         }
 
